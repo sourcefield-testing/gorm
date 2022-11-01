@@ -116,7 +116,7 @@ jobs:
     name: Parse TypeScript and JavaScript Maps
     runs-on: ubuntu-latest
     container:
-      image: "us-docker.pkg.dev/plumbr/sourcefield-public/sourcefield-lsif-typescript:e9245ff"
+      image: "us-docker.pkg.dev/plumbr/sourcefield-public/sourcefield-lsif-typescript:d8ea8cb"
     needs:
       - fetchLanguages
       - getMergeBase
@@ -194,7 +194,7 @@ jobs:
     name: Parse Go Maps
     runs-on: ubuntu-latest
     container:
-      image: "us-docker.pkg.dev/plumbr/sourcefield-public/sourcefield-lsif-go:6fa3da2"
+      image: "us-docker.pkg.dev/plumbr/sourcefield-public/sourcefield-lsif-go:6bd6e8a"
     needs:
       - fetchLanguages
       - getMergeBase
@@ -230,7 +230,7 @@ jobs:
     name: Process and Diff Maps (Python)
     runs-on: ubuntu-latest
     container:
-      image: "us-docker.pkg.dev/plumbr/sourcefield-public/parse-processor/lsif-processor:8162c90"
+      image: "us-docker.pkg.dev/plumbr/sourcefield-public/parse-processor/lsif-processor:ce52cb5"
     needs:
       - fetchLanguages
       - getMergeBase
@@ -281,19 +281,17 @@ jobs:
         run: |
           cd /sourcefield
           python3 -m processor.mapdiff.commands - diff_maps_and_report_metrics \
-          --repo_owner="${{ github.event.pull_request.base.repo.owner.login }}" \
-          --repo_name="${{ github.event.pull_request.base.repo.name }}" \
-          --pr_number=${{ github.event.pull_request.number }} \
           --map1=/sourcefield/base.pickle \
           --map2=/sourcefield/head.pickle \
           --diff=/sourcefield/diff.txt \
+          --pr_event="${GITHUB_EVENT_PATH}" \
           --backend_url="https://cartographr-api.sourcefield.io/dev-hwkns-plumbr/graphql"
 
   processMapsTypeScript:
     name: Process and Diff Maps (TypeScript and JavaScript)
     runs-on: ubuntu-latest
     container:
-      image: "us-docker.pkg.dev/plumbr/sourcefield-public/parse-processor/lsif-processor:8162c90"
+      image: "us-docker.pkg.dev/plumbr/sourcefield-public/parse-processor/lsif-processor:ce52cb5"
     needs:
       - fetchLanguages
       - getMergeBase
@@ -344,19 +342,17 @@ jobs:
         run: |
           cd /sourcefield
           python3 -m processor.mapdiff.commands - diff_maps_and_report_metrics \
-          --repo_owner="${{ github.event.pull_request.base.repo.owner.login }}" \
-          --repo_name="${{ github.event.pull_request.base.repo.name }}" \
-          --pr_number=${{ github.event.pull_request.number }} \
           --map1=/sourcefield/base.pickle \
           --map2=/sourcefield/head.pickle \
           --diff=/sourcefield/diff.txt \
+          --pr_event="${GITHUB_EVENT_PATH}" \
           --backend_url="https://cartographr-api.sourcefield.io/dev-hwkns-plumbr/graphql"
 
   processMapsJava:
     name: Process and Diff Maps (Java)
     runs-on: ubuntu-latest
     container:
-      image: "us-docker.pkg.dev/plumbr/sourcefield-public/parse-processor/lsif-processor:8162c90"
+      image: "us-docker.pkg.dev/plumbr/sourcefield-public/parse-processor/lsif-processor:ce52cb5"
     needs:
       - fetchLanguages
       - getMergeBase
@@ -407,19 +403,17 @@ jobs:
         run: |
           cd /sourcefield
           python3 -m processor.mapdiff.commands - diff_maps_and_report_metrics \
-          --repo_owner="${{ github.event.pull_request.base.repo.owner.login }}" \
-          --repo_name="${{ github.event.pull_request.base.repo.name }}" \
-          --pr_number=${{ github.event.pull_request.number }} \
           --map1=/sourcefield/base.pickle \
           --map2=/sourcefield/head.pickle \
           --diff=/sourcefield/diff.txt \
+          --pr_event="${GITHUB_EVENT_PATH}" \
           --backend_url="https://cartographr-api.sourcefield.io/dev-hwkns-plumbr/graphql"
 
   processMapsGo:
     name: Process and Diff Maps (Go)
     runs-on: ubuntu-latest
     container:
-      image: "us-docker.pkg.dev/plumbr/sourcefield-public/parse-processor/lsif-processor:8162c90"
+      image: "us-docker.pkg.dev/plumbr/sourcefield-public/parse-processor/lsif-processor:ce52cb5"
     needs:
       - fetchLanguages
       - getMergeBase
@@ -470,10 +464,8 @@ jobs:
         run: |
           cd /sourcefield
           python3 -m processor.mapdiff.commands - diff_maps_and_report_metrics \
-          --repo_owner="${{ github.event.pull_request.base.repo.owner.login }}" \
-          --repo_name="${{ github.event.pull_request.base.repo.name }}" \
-          --pr_number=${{ github.event.pull_request.number }} \
           --map1=/sourcefield/base.pickle \
           --map2=/sourcefield/head.pickle \
           --diff=/sourcefield/diff.txt \
+          --pr_event="${GITHUB_EVENT_PATH}" \
           --backend_url="https://cartographr-api.sourcefield.io/dev-hwkns-plumbr/graphql"
